@@ -1,0 +1,32 @@
+/* FlowPulse Campus - main.css
+   Design tokens, base elements, header and page layout. */
+
+:root{--bg:#0F172A;--panel:#1E293B;--line:#334155;--tx:#E2E8F0;--mut:#94A3B8;--ok:#22C55E;--warn:#F59E0B;--crit:#EF4444;--acc:#38BDF8;--hot:239,68,68;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root{--bg:#F1F5F9;--panel:#FFFFFF;--line:#CBD5E1;--tx:#0F172A;--mut:#475569;--acc:#0369A1;color-scheme:light}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 Inter,"Segoe UI",system-ui,sans-serif}
+button,select{font:inherit;color:inherit}
+button{background:var(--line);border:0;border-radius:6px;padding:7px 12px;cursor:pointer;min-height:34px}
+button:hover{filter:brightness(1.15)}
+button:focus-visible,select:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+button.pri,button.on{background:var(--acc);color:#0F172A;font-weight:600}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.big{width:100%;padding:14px;font-size:16px;min-height:48px;margin-top:8px}
+select{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--panel)}
+.logo{font-weight:700;font-size:18px}.logo i{color:var(--acc);font-style:normal}
+nav{display:flex;gap:6px}
+.clock{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;min-width:62px}
+.ctl{display:flex;align-items:center;gap:10px;flex:1;min-width:260px;flex-wrap:wrap}
+.ctl input[type=range]{flex:1;min-width:120px;accent-color:var(--acc)}
+.note{flex-basis:100%;font-size:13px;color:var(--warn);min-height:0}
+.wrap{max-width:1180px;margin:0 auto;padding:12px;display:flex;flex-direction:column;gap:22px}
+section{display:flex;flex-direction:column;gap:12px;min-width:0}
+.sh{font-size:20px;margin:0;font-weight:700;padding-bottom:6px;border-bottom:2px solid var(--acc)}
+.sh small{font-size:13px;font-weight:400;color:var(--mut);margin-left:8px}
+.twoeq{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+#student{display:none;max-width:560px}
+#student .twoeq{grid-template-columns:1fr}
+body.sv #office{display:none}body.sv #student{display:flex}
+@media (max-width:900px){.twoeq,.lg{grid-template-columns:1fr}}

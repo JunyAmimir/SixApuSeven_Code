@@ -1,0 +1,47 @@
+/* FlowPulse Campus - components.css
+   Cards, alerts, queue panels, seat grid, map, heatmap, tables, parking and student tiles. */
+
+.abig{border:3px solid var(--crit);background:rgba(239,68,68,.14);border-radius:12px;padding:18px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px}
+.abig h3{margin:0 0 4px;font-size:24px}.abig p{margin:0;font-size:16px}
+.abig button{font-size:18px;padding:14px 22px;background:var(--crit);color:#fff;font-weight:700;min-height:56px}
+.abig.ok{border-color:var(--ok);background:rgba(34,197,94,.1)}.abig.ok h3{font-size:18px}.abig.calm{padding:12px 16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0}
+h2{font-size:12px;text-transform:uppercase;color:var(--mut);margin:0 0 8px;font-weight:600;letter-spacing:.06em}
+.mks{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.mk b{display:block;font-size:30px;line-height:1.1;font-weight:700;font-variant-numeric:tabular-nums}
+.mk small{font-size:11px;text-transform:uppercase}
+.item{border-left:4px solid var(--mut);background:var(--bg);border-radius:6px;padding:8px 10px;margin-bottom:8px}
+.item.crit{border-color:var(--crit)}.item.warn{border-color:var(--warn)}.item.ok{border-color:var(--ok)}.item.info{border-color:var(--acc)}
+.item p{margin:0 0 6px}.mut,small{color:var(--mut)}
+.bar{display:flex;height:12px;background:var(--bg);border-radius:6px;overflow:hidden;margin:6px 0 4px}.bar span{display:block;height:100%}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.seats{display:grid;grid-template-columns:repeat(15,1fr);gap:3px;margin:8px 0}.seats i{aspect-ratio:1;border-radius:3px}
+.lg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lg ol{margin:0;padding:0;list-style:none;font-size:12px}.lg li{padding:3px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:6px;font-variant-numeric:tabular-nums}
+.pill{font-size:11px;border-radius:10px;padding:1px 7px;background:var(--warn);color:#0F172A;font-weight:600}
+svg.map{width:100%;height:auto;display:block;background:var(--bg);border-radius:8px}
+.blines{margin-top:8px;font-size:13px}.blines div{padding:2px 0}
+.heat{overflow-x:auto}
+.hg{display:grid;grid-template-columns:34px repeat(17,minmax(28px,1fr));gap:2px;min-width:580px;font-size:11px;color:var(--mut)}
+.hg div{height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center}
+.hg .pk{color:var(--acc);font-weight:700}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:12px;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:5px 8px;text-align:right;border-bottom:1px solid var(--line)}
+.tbl th:first-child,.tbl td:first-child{text-align:left}.tbl th{color:var(--mut);font-weight:600}
+.tblw{overflow-x:auto}
+.log{font:12px ui-monospace,Consolas,monospace;max-height:190px;overflow:auto}
+.log div{padding:3px 0;border-bottom:1px solid var(--line)}
+textarea{width:100%;height:110px;background:var(--bg);border:1px solid var(--line);border-radius:6px;color:var(--tx);font:12px ui-monospace,Consolas,monospace;padding:8px;margin-top:8px}
+.lot{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:14px}
+.lot.ok{border-color:var(--ok)}.lot.warn{border-color:var(--warn)}.lot.crit{border-color:var(--crit)}
+.lot b.n{font-size:44px;line-height:1;font-variant-numeric:tabular-nums}
+.lot.sv b.n{font-size:88px;font-weight:800}.lot.sv .of{font-size:18px}.lot.sv .nm{font-size:20px}
+.strip{display:grid;grid-template-columns:repeat(17,1fr);gap:2px;margin:10px 0 4px}.strip i{height:18px;border-radius:2px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.tile{background:var(--panel);border-radius:10px;padding:12px 8px;text-align:center}
+.tile b{display:block;font-size:64px;line-height:1;font-weight:800;font-variant-numeric:tabular-nums}
+.tile span{font-size:15px;color:var(--mut)}
+.state{border:2px solid var(--line);border-radius:10px;padding:14px;margin-top:10px;background:var(--bg)}
+.state.ok{border-color:var(--ok)}.state.warn{border-color:var(--warn)}.state.crit{border-color:var(--crit)}.state.info{border-color:var(--acc)}
+.state p{margin:6px 0}
+@media (max-width:640px){.mk b{font-size:24px}}

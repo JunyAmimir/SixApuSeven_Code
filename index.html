@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FlowPulse Campus</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+<header>
+<div class="logo">Flow<i>Pulse</i> Campus</div>
+<nav><button id="nO" class="on" onclick="view('office')">Office</button><button id="nS" onclick="view('student')">Students</button></nav>
+<div class="ctl"><button id="play" class="pri" onclick="toggle()">Pause</button><input id="sl" type="range" min="360" max="1320" step="1" aria-label="Time of day"><span class="clock" id="clk"></span>
+<select id="day" aria-label="Simulated day"></select>
+<select id="spd" aria-label="Speed"><option value="1">1 min/s</option><option value="2">2 min/s</option><option value="6">6 min/s</option><option value="20">20 min/s</option></select></div>
+<div class="note" id="note" role="status"></div>
+</header>
+
+<main id="office" class="wrap">
+<section>
+<h1 class="sh">Bus<small>Monday to Friday only. 6 buses in rotation, one leaves each stop every 10 minutes, 75 seats each.</small></h1>
+<div id="alerts"></div>
+<div class="card"><h2>Live bus rotation</h2><div id="map"></div></div>
+<div class="twoeq" id="stops"></div>
+<div class="twoeq">
+<div class="card"><h2>Bus departures</h2><div class="log" id="deps"></div></div>
+<div class="card"><h2>Kiosk scans</h2><div class="log" id="scans"></div></div>
+</div>
+<div class="card"><div class="row"><h2>Weekly report</h2><span><select id="wk" aria-label="Week"></select> <select id="ws" aria-label="Stop"><option value="L">LRT station</option><option value="C">School campus</option></select></span></div>
+<div id="wsum"></div>
+<div class="mut" style="margin:4px 0 8px">Queue requests per hour. Bus capacity is 450 seats per hour at each stop.</div>
+<div class="heat"><div class="hg" id="grid"></div></div>
+<div id="ins" style="margin-top:12px"></div>
+<div class="row" style="justify-content:flex-start"><button onclick="report()">Build CSV</button><button onclick="copyRep()">Copy</button><small id="repmsg"></small></div>
+<textarea id="rep" readonly placeholder="Build the report, then paste it into a spreadsheet."></textarea></div>
+</section>
+<section>
+<h1 class="sh">Parking<small>Live bay sensors. Underground 700 bays, outside 500 bays.</small></h1>
+<div id="parkO"></div>
+</section>
+</main>
+
+<main id="student" class="wrap">
+<section><h1 class="sh">Bus<small>Monday to Friday only</small></h1><div class="card" id="busS"></div></section>
+<section><h1 class="sh">Parking</h1><div id="parkS"></div></section>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/mockData.js"></script>
+<script src="js/queue.js"></script>
+<script src="js/history.js"></script>
+<script src="js/parking.js"></script>
+<script src="js/map.js"></script>
+<script src="js/office.js"></script>
+<script src="js/student.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
