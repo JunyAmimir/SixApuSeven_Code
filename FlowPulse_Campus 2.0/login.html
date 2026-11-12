@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#132c2f"><title>Sign in · FlowPulse Campus</title><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="css/login.css"></head>
+<body>
+<main class="login-layout">
+<section class="login-story" aria-label="FlowPulse Campus">
+<a class="login-brand" href="/login.html" aria-label="FlowPulse home"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 18h6l4-9 5 16 4-11h5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span>FlowPulse<small>CAMPUS MOBILITY</small></span></a>
+<div class="story-content"><span class="story-eyebrow"><i></i> ONE CAMPUS. BETTER CONNECTED.</span><h1>Every journey<br> starts here.</h1><p>A little less waiting. A smoother campus.<br>Your own space to keep things moving.</p>
+<div class="network-art" aria-hidden="true"><svg viewBox="0 0 520 240" fill="none"><path class="network-grid" d="M0 40h520M0 100h520M0 160h520M0 220h520M60 0v240M140 0v240M220 0v240M300 0v240M380 0v240M460 0v240"/><path class="route-shadow" d="M42 169h115c37 0 25-86 78-86h230"/><path class="animated-route" d="M42 169h115c37 0 25-86 78-86h230"/><circle cx="42" cy="169" r="15" fill="#183c3d" stroke="#8ed7be" stroke-width="2"/><circle cx="42" cy="169" r="5" fill="#a7ebd2"/><circle cx="465" cy="83" r="15" fill="#183c3d" stroke="#8ed7be" stroke-width="2"/><circle cx="465" cy="83" r="5" fill="#a7ebd2"/><g class="art-bus"><rect x="259" y="47" width="98" height="49" rx="11" fill="#cce9df"/><path d="M269 57h78v20h-78z" fill="#6b9e8f"/><path d="M294 57v20m27-20v20" stroke="#cce9df" stroke-width="2"/><path d="M270 85h7m59 0h8" stroke="#3b6b5a" stroke-width="2"/><circle cx="278" cy="97" r="7" fill="#132c2f" stroke="#95c8b3" stroke-width="2"/><circle cx="337" cy="97" r="7" fill="#132c2f" stroke="#95c8b3" stroke-width="2"/></g><text x="20" y="213">BUKIT JALIL LRT</text><text x="414" y="128">APU CAMPUS</text></svg><span class="network-caption">A familiar route. A better experience.</span></div>
+</div><div class="story-footer"><span class="story-seal">FP</span><span>Built around campus life.<small>Students, staff and drivers. Connected.</small></span></div>
+</section>
+<section class="login-main" aria-labelledby="loginTitle"><div class="login-card">
+<div class="login-heading"><span class="eyebrow">WELCOME TO FLOWPULSE</span><h2 id="loginTitle">Your campus.<br> Your workspace.</h2><p>Choose your account and sign in to continue.</p></div>
+<form id="accountLoginForm" novalidate>
+<fieldset class="account-selector"><legend>I’m signing in as</legend><div class="account-options">
+<label class="account-card"><input type="radio" name="accountRole" value="staff"><span class="account-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 21V5h16v16M2 21h20M8 9h1m6 0h1M8 13h1m6 0h1M10 21v-4h4v4M8 2h8v3"/></svg></span><strong>APU staff</strong><small>Campus operations</small></label>
+<label class="account-card"><input type="radio" name="accountRole" value="driver"><span class="account-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 17V5c0-2 14-2 14 0v12H5zm2 0v3m10-3v3M5 10h14M8 14h1m6 0h1M9 4v6"/></svg></span><strong>Bus driver</strong><small>Your shuttle requests</small></label>
+<label class="account-card"><input type="radio" name="accountRole" value="student" checked><span class="account-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5-10-5zm4 3v6c4 3 8 3 12 0v-6M22 9v7"/></svg></span><strong>Student</strong><small>Your everyday rides</small></label>
+</div></fieldset>
+<div class="login-field"><label for="accountUsername">Username</label><input id="accountUsername" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required maxlength="100" placeholder="Enter your username"></div>
+<div class="login-field"><label for="accountPassword">Password</label><div class="password-field"><input id="accountPassword" name="password" type="password" autocomplete="current-password" required maxlength="256" placeholder="Enter your password"><button type="button" id="passwordToggle" aria-label="Show password" title="Show password"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+<p id="accountLoginError" class="login-error" role="alert" hidden></p>
+<button type="submit" id="accountSubmit" class="login-submit"><span id="submitText">Sign in as a student</span><svg class="submit-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg><span class="button-spinner" aria-hidden="true"></span></button>
+<div class="workspace-hint" id="workspaceHint"><span class="hint-dot"></span><span>Reservations, boarding passes and your next ride.</span></div>
+</form>
+<div class="login-bottom"><span class="secure-symbol"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3zm-4 9 3 3 5-6"/></svg></span><p>One account. One focused workspace.<br><span>You’ll only see what belongs to your role.</span></p></div>
+<footer>FlowPulse Campus <span>Thoughtful journeys. Connected campus.</span></footer>
+</div></section></main><script src="js/login.js"></script>
+</body></html>
