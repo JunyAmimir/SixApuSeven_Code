@@ -9,3 +9,4 @@ const HIST=[];let GMX=1;
 
 // total of one stat (req, brd, ns, bk) for a day and stop
 const sum=(d,s,k)=>HIST[d][s].reduce((a,c)=>a+c[k],0);
+

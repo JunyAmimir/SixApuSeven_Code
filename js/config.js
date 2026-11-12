@@ -16,3 +16,4 @@ const dname=d=>`Week ${Math.floor(d/5)+1} ${DAYS[d%5]}`;
 const H=[];for(let h=6;h<=22;h++)H.push(h);
 const MYID='TP'+String(Math.floor(Math.random()*1e6)).padStart(6,'0'),MYN=+MYID.slice(2)%997;
 let DAYI=5,t=START-1,SIM,R,playing=true,closed={},REC=null,AUTO=false,nt;
+

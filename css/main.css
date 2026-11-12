@@ -30,3 +30,4 @@ section{display:flex;flex-direction:column;gap:12px;min-width:0}
 #student .twoeq{grid-template-columns:1fr}
 body.sv #office{display:none}body.sv #student{display:flex}
 @media (max-width:900px){.twoeq,.lg{grid-template-columns:1fr}}
+

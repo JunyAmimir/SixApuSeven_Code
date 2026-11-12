@@ -13,5 +13,6 @@ function parkHTML(office){
  return `<div class="lot ${s}${office?'':' sv'}"><div class="row"><b class="nm">${L.n}</b><span class="mut">${c?'Closed':tr<-5?'Filling up':tr>5?'Emptying':'Steady'}</span></div>
  <div style="margin-top:8px"><b class="n" style="color:var(--${s})">${c?0:f}</b> <span class="mut of">of ${L.cap} bays free</span></div>
  <div class="bar"><span style="width:${c?100:(1-f/L.cap)*100}%;background:var(--${s})"></span></div>
- <div class="strip">${strip}</div><small>Occupancy by hour, 06:00 to 22:00 (current hour outlined)</small>
- <div style="margin-top:10px">${office?`<button onclick="closed.${L.id}=!closed.${L.id};draw()">${c?'Reopen this lot':'Mark as closed'}</button>`:`<small>${c?'Closed by the campus office.':f<40?'Almost full. Try the other lot.':'Spaces available.'}</small>`}</div></div>`}).join('')+'</div><small>Updated by bay sensors at '+fmt(t)+'.</small>'}
+ <div class="strip">${strip}</div><small>Modelled occupancy by hour, 06:00 to 22:00 (current hour outlined)</small>
+ <div style="margin-top:10px">${office?`<button onclick="closed.${L.id}=!closed.${L.id};draw()">${c?'Reopen this lot':'Mark as closed'}</button>`:`<small>${c?'Closed by the campus office.':f<40?'Almost full. Try the other lot.':'Spaces available.'}</small>`}</div></div>`}).join('')+'</div><small>Simulated occupancy at '+fmt(t)+'.</small>'}
+

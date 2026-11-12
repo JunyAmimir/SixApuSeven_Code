@@ -1,25 +1,33 @@
-/* FlowPulse Campus - student.js
-   Student view: live bus location, big on-queue / pending numbers, join buttons and parking. */
-
-/* ---- student bus card ---- */
-function qr(){let c='';for(let i=0;i<11;i++)for(let j=0;j<11;j++){const f=(i<3&&j<3)||(i<3&&j>7)||(i>7&&j<3);if(f||rnd(i+MYN,j+5)>.5)c+=`<rect x="${j*10}" y="${i*10}" width="10" height="10"/>`}return `<svg viewBox="0 0 110 110" style="width:130px;background:#fff;padding:8px;border-radius:8px" fill="#0F172A" role="img" aria-label="Your QR code">${c}</svg>`}
-function stopBlock(s){
- const me=SIM.me,mine=me&&!me.done&&me.stop===s,busy=me&&!me.done,riding=me&&me.done==='boarded'&&t<me.tb+TRIP,nd=nextDep(),qn=Q(s).length,pn=P(s).length;
- let h=`<div class="state ${mine?(me.st==='p'?'warn':'ok'):'info'}"><div class="row"><b style="font-size:20px">${SN[s]}</b><span class="mut">Next bus ${fmt(nd)} (Bus #${busOf(s,nd)+1})</span></div>
- <div class="tiles"><div class="tile"><b style="color:var(--${sq(qn)})">${qn}</b><span>On queue</span></div><div class="tile"><b style="color:var(--acc)">${pn}</b><span>Pending</span></div></div>`;
- if(mine&&me.st==='p')h+=`<p>Your ID is <b>${MYID}</b>. You have no seat yet. Show this QR code or tap your NFC tag at the kiosk in the bus waiting area. Your request expires in ${Math.max(0,EXP-(t-me.tj))} min.</p><div style="text-align:center">${qr()}</div><button class="pri big" onclick="scanMe()">Demo: scan at kiosk</button><p><button onclick="cancelMe()">Cancel request</button></p>`;
- else if(mine){const qd=Q(s),pos=qd.indexOf(me)+1,full=pos>CAP*(SIM.extra[s]?2:1);h+=`<p><b>You are on queue</b></p><div style="font-size:44px;font-weight:800;color:var(--${full?'crit':'ok'})">#${pos}</div>${full?'<p>The next bus will be full. You will wait for the following bus and get first place on it.</p>':`<p>You are on the ${fmt(nd)} bus.${me.carried?' You have first priority because the last bus was full.':''}</p>`}<button onclick="cancelMe()">Leave queue</button>`}
- else h+=`<button class="pri big" ${busy||riding?'disabled':''} onclick="joinMe('${s}')">Join queue at ${SN[s]}</button>${busy?'<small>You are already in a queue at the other stop.</small>':riding?'<small>You are on a bus right now.</small>':''}`;
- return h+'</div>'}
+/* Student journey: choose a stop, check in, wait, then ride. */
+function selectStudentStop(s){if(!['L','C'].includes(s)||SIM.me&&!SIM.me.done)return;SIM.selectedStop=s;drawStudent()}
+function journeySteps(stage){return '<ol class="journey-steps">'+['Choose stop','Check in','Your ride'].map((label,i)=>`<li class="${i<=stage?'current':''}" ${i===stage?'aria-current="step"':''}><span>${i+1}</span>${label}</li>`).join('')+'</ol>'}
+function destination(s){return s==='L'?'School campus':'LRT station'}
+function studentChoice(){
+ const selected=SIM.selectedStop,open=t<END;
+ return journeySteps(0)+`<div class="student-heading"><span class="eyebrow">PLAN YOUR RIDE</span><h1>Where are you leaving from?</h1><p>Choose your starting point to join the shuttle queue.</p></div>`+(!open?'<div class="item warn">Service has ended for today. Please arrange alternative transport.</div>':'')+'<div class="station-choices">'+['L','C'].map(s=>`<button class="station-choice ${selected===s?'selected':''}" aria-pressed="${selected===s}" onclick="selectStudentStop('${s}')"><span class="station-icon">${s==='L'?'L':'C'}</span><span><b>${SN[s]}</b><small>To ${destination(s)}</small><small>${Q(s).length} waiting${open?' / next departure '+fmt(nextDep()):' / service closed'}</small></span><span aria-hidden="true">${selected===s?'Selected':'Choose'}</span></button>`).join('')+`</div><button class="pri big" ${!selected||!open?'disabled':''} onclick="joinMe(SIM.selectedStop)">${!open?'Service closed':selected?'Join queue from '+SN[selected]:'Choose a stop above'}</button><p class="mut">Joining creates a request. Check in at the station to receive your queue position.</p>`;
+}
+function studentRequest(me){
+ const checked=me.st==='q',pos=checked?Q(me.stop).indexOf(me)+1:null,e=checked?estimate(me.stop,pos):null;
+ let h=journeySteps(1)+`<div class="student-heading"><span class="eyebrow">${SN[me.stop]} TO ${destination(me.stop)}</span><h1>${checked?'Your place in the queue':'Check in when you arrive'}</h1><p>${checked?'Stay near the boarding area. Your queue order is preserved.':'Your request is ready. Check in at the station to confirm you are here.'}</p></div>`;
+ if(!checked)h+=`<div class="ticket-card"><span>Student ID</span><strong>${MYID}</strong><p>Check in within <b>${Math.max(0,EXP-(t-me.tj))} simulated minutes</b>. You do not have a queue position yet.</p></div><button class="pri big" onclick="scanMe()">Demo: check in at kiosk</button><p class="mut">This button simulates a station scan. No real QR or NFC reader is connected.</p>`;
+ else h+=`<div class="queue-ticket"><div><span>Your position</span><strong>#${pos}</strong></div><div><span>Estimated wait</span><strong>${e?e.wait+'<small> min</small>':'--'}</strong></div></div><div class="departure-card"><span>Estimated departure</span><b>${e?fmt(e.time):'No seat projected today'}</b><p>${e?(e.backup?'Backup shuttle':'Bus #'+e.bus)+' to '+destination(me.stop):'Please contact campus transport for an alternative.'}</p></div>${e&&e.time>nextDep()?'<div class="item warn">The next departure will fill before your turn. Your estimate includes the later departure you can fit on.</div>':''}<p class="mut">Based on the current queue and scheduled buses. This is an estimate, not a seat reservation.</p>`;
+ if(SIM.extra[me.stop])h+=`<div class="item info"><b>A backup is coming to your stop</b><p>${backupStatus(me.stop)}</p></div>`;
+ return h+`<button class="quiet-button" onclick="cancelMe()">${checked?'Leave queue':'Cancel request'}</button>`;
+}
+function studentRide(me){
+ const arrived=t>=me.tb+TRIP,label=me.backup?'Backup shuttle':'Bus #'+me.bus;
+ return journeySteps(2)+`<div class="student-heading"><span class="eyebrow">${arrived?'JOURNEY COMPLETE':'ON YOUR WAY'}</span><h1>${arrived?'You have arrived':'You are on board'}</h1><p>${arrived?'Welcome to '+destination(me.stop)+'.':'Heading to '+destination(me.stop)+'.'}</p></div><div class="ride-card"><span>${label}</span><strong>${arrived?destination(me.stop):fmt(me.tb+TRIP)}</strong><p>${arrived?'Thanks for riding with FlowPulse.':'Estimated arrival / departed at '+fmt(me.tb)}</p></div>${arrived?'<button class="pri big" onclick="cancelMe()">Plan another ride</button>':'<p class="mut">Your boarding is confirmed. The simulated journey takes 20 minutes.</p>'}`;
+}
 function busStudent(){
- const me=SIM.me;let hl=null,top=SP(DAYI)?`<div class="state warn"><b>Heavy demand 12:00 to 18:00 today.</b> Join the queue early.</div>`:'';
- if(me&&!me.done){const s=me.stop,qd=Q(s);let nd=nextDep();if(me.st==='q'&&qd.indexOf(me)+1>CAP*(SIM.extra[s]?2:1))nd+=HW;const nb=busOf(s,nd);hl=nb;
-  top+=`<div class="state info"><b>Live location: Bus #${nb+1}</b><p>${busLine(nb)}</p><p>It leaves ${SN[s]} at ${fmt(nd)}.</p></div>`}
- else if(me&&me.done==='boarded'&&t<me.tb+TRIP){hl=me.bus-1;top+=`<div class="state ok"><b>You are on Bus #${me.bus}</b><p>Heading to ${me.stop==='L'?'the school campus':'the LRT station'}. Arriving at ${fmt(me.tb+TRIP)}.</p></div>`}
- else{if(me&&me.done==='boarded')top+=`<div class="state ok"><b>You arrived at ${me.stop==='L'?'the school campus':'the LRT station'}.</b><p>Thanks for riding Bus #${me.bus}.</p></div>`;
-  if(me&&me.done==='expired')top+=`<div class="state crit"><p>Your request expired because no kiosk scan was received. Join again and scan within ${EXP} minutes.</p></div>`}
- return mapHTML(hl)+top+stopBlock('L')+stopBlock('C')}
-
+ const me=SIM.me;let h,hl=null;
+ if(me&&!me.done){h=studentRequest(me);if(me.st==='q'){const e=estimate(me.stop,Q(me.stop).indexOf(me)+1);if(e&&!e.backup)hl=e.bus-1;}}
+ else if(me&&me.done==='boarded'){h=studentRide(me);if(!me.backup)hl=me.bus-1;}
+ else h=(me&&me.done==='expired'?'<div class="item warn" role="status">Your request expired before check-in. Choose a stop to try again.</div>':'')+studentChoice();
+ return h+'<details class="route-details"><summary>View shuttle route and simulated locations</summary>'+mapHTML(hl)+'</details>';
+}
 function drawStudent(){
- $('#busS').innerHTML=busStudent();
- $('#parkS').innerHTML=parkHTML(false)}
+ const open=$('#busS .route-details')?.open;
+ $('#busS').innerHTML=busStudent();if(open)$('#busS .route-details').open=true;
+ $('#parkS').innerHTML=parkHTML(false);
+ $('#studentStatus').textContent=`Simulation / ${fmt(t)} / ${playing?'Running':'Paused - press Play in the top bar'}`;
+}
